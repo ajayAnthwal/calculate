@@ -1,16 +1,19 @@
-'use client';
-import axios from 'axios';
-import React, { useEffect } from 'react';
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Calculator = () => {
+  const [booksData, setBooksData] = useState([]);
 
-  useEffect(()=>{
-    async function getCall(){
-      const res = await axios.get("/api/price/getPrice")
-      console.log(res);
+  useEffect(() => {
+    async function getCall() {
+      const res = await axios.get("/api/price/getPrice");
+      if (res.data[0].bookPrice) {
+        setBooksData(res?.data[0]?.bookPrice);
+      }
     }
-    getCall()
-  },[])
+    getCall();
+  }, []);
   return (
     <div className=" bg-gray-50 ">
       <div className="flex flex-col items-center justify-center bg-gray-50 p-6">
@@ -52,7 +55,16 @@ const Calculator = () => {
                   Book Size:
                 </label>
                 <select className="w-[245px] border border-gray-300  p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500">
-                  <option className="text-xs">Select Book Size</option>
+                  {booksData &&
+                    booksData.map((item) => (
+                      <option
+                        key={item._id}
+                        value={item.bookType}
+                        className="text-xs"
+                      >
+                        {item.bookType}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="flex items-center">
@@ -240,7 +252,7 @@ const Calculator = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Calculator
+export default Calculator;
