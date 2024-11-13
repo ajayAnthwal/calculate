@@ -1,12 +1,14 @@
-import AdminScreen from '@/components/admin-screen/AdminScreen'
-import React from 'react'
+import AdminScreen from "@/components/admin-screen/AdminScreen";
+import React, { Suspense } from "react";
 
 const AdminScreenPage = () => {
   return (
     <>
-    <AdminScreen/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AdminScreen />
+      </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default AdminScreenPage
+export default AdminScreenPage;
