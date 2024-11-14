@@ -3,13 +3,152 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Calculator = () => {
+  // input states
+  const [noOfPages, setNoOfPages] = useState("");
+  const [noOfPages2, setNoOfPages2] = useState("");
+  const [mrp, setMrp] = useState("");
+  const [mrp2, setMrp2] = useState("");
+  const [selectedBookType, setSelectedBookType] = useState("");
+  const [selectedBookType2, setSelectedBookType2] = useState("");
+
   const [booksData, setBooksData] = useState([]);
+  // result states
+  const [card1, setCard1] = useState({ pc: "", msp: "" });
+  const [card2, setCard2] = useState({ odc: "", vbdStore: "" });
+  const [card3, setCard3] = useState({ paperbackMrp: "", suggestedMrp: "" });
+  const [card4, setCard4] = useState({ kindle: "", gPlaystore: "" });
+
+  // error states
+  const [error, setError] = useState({
+    card1Error: "",
+    card2Error: "",
+    card3Error: "",
+    card4Error: "",
+  });
+
+  const handleOnChange = (e) => {
+    const inputValue = e.target.value;
+    const name = e.target.name;
+    const numberRegex = /^[0-9]*$/;
+
+    // Check if the input matches the regex
+    if (!numberRegex.test(inputValue)) {
+      return;
+    }
+    if (name == "mrp") {
+      setMrp(inputValue);
+    } else if (name == "noOfPages") {
+      setNoOfPages(inputValue);
+    } else if (name == "mrp2") {
+      setMrp2(inputValue);
+    } else if (name == "noOfPages2") {
+      setNoOfPages2(inputValue);
+    }
+  };
+
+  // CALCULATIONS
+  const calculateProductionCost = () => {
+    setError({ ...error, card1Error: "" });
+    if (
+      !noOfPages ||
+      !selectedBookType ||
+      selectedBookType.includes("Select Book Size") ||
+      parseInt(noOfPages2) < 35 ||
+      parseInt(noOfPages2) > 1200
+    ) {
+      setError({
+        ...error,
+        card1Error: "Please enter page number between 35 - 1200",
+      });
+      return;
+    }
+
+    const selectedItem = booksData.find(
+      (item) => item.bookType == selectedBookType
+    );
+    if (!selectedItem) {
+      return;
+    }
+
+    const productionCost = parseInt(noOfPages) * selectedItem?.price;
+    const minimumSellingPrice = Number(parseInt(noOfPages) * 1.55);
+    setCard1({
+      pc: Number(productionCost.toFixed(0)),
+      msp: Number(minimumSellingPrice.toFixed(0)),
+    });
+  };
+
+  const calculatePaperBackEarning = () => {
+    setError({ ...error, card2Error: "" });
+    if (!mrp || !card1.msp || parseInt(mrp) < parseInt(card1.msp)) {
+      setError({
+        ...error,
+        card2Error: "MRP (selling price) should be greater than SSP !",
+      });
+      return;
+    }
+    const x = parseInt(card1.msp) * 0.4;
+    const otherDistChannel = x - card1.pc;
+    const vbdStore = parseInt(card1.msp) - parseInt(card1.pc);
+    setCard2({ odc: otherDistChannel, vbdStore });
+  };
+
+  const calcuateSuggestedPrice = () => {
+    setError({ ...error, card3Error: "" });
+    if (
+      !noOfPages2 ||
+      !selectedBookType2 ||
+      selectedBookType2.includes("Select Book Size") ||
+      parseInt(noOfPages2) < 35 ||
+      parseInt(noOfPages2) > 1200
+    ) {
+      setError({
+        ...error,
+        card3Error: "Please enter page number between 35 - 1200",
+      });
+      return;
+    }
+
+    const selectedItem = booksData.find(
+      (item) => item.bookType == selectedBookType2
+    );
+    if (!selectedItem) {
+      return;
+    }
+    const minimumPaperbackMrp = parseInt(noOfPages2) * 1.55;
+    const suggestedEbookMrp = Math.round(minimumPaperbackMrp / 2);
+
+    setCard3({
+      paperbackMrp: Number(minimumPaperbackMrp).toFixed(0),
+      suggestedMrp: Number(suggestedEbookMrp).toFixed(0),
+    });
+  };
+
+  const calculateEbookEarning = () => {
+    setError({ ...error, card4Error: "" });
+    if (!mrp2 || parseInt(mrp2) < 49) {
+      setError({
+        ...error,
+        card4Error: "Ebook MRP (selling price) should be greater than Rs.49 !",
+      });
+      return;
+    }
+
+    const amazonKindle = (parseInt(mrp2) * 30) / 100;
+    const googlePlayStore = (parseInt(mrp2) * 52) / 100;
+
+    setCard4({
+      kindle: Number(amazonKindle).toFixed(0),
+      gPlaystore: Number(googlePlayStore).toFixed(0),
+    });
+  };
 
   useEffect(() => {
     async function getCall() {
       const res = await axios.get("/api/price/getPrice");
-      if (res.data[0].bookPrice) {
-        setBooksData(res?.data[0]?.bookPrice);
+      if (res?.data[0]?.bookPrice) {
+        const prices = res?.data[0]?.bookPrice;
+        setBooksData(prices);
       }
     }
     getCall();
@@ -54,7 +193,14 @@ const Calculator = () => {
                 <label className="text-[#555] w-[200px] text-sm font-medium">
                   Book Size:
                 </label>
-                <select className="w-[245px] border border-gray-300  p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500">
+                <select
+                  value={selectedBookType}
+                  onChange={(e) => setSelectedBookType(e.target.value)}
+                  className="w-[245px] border border-gray-300  p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500"
+                >
+                  <option value="Select Book Size" className="text-xs">
+                    Select Book Size
+                  </option>
                   {booksData &&
                     booksData.map((item) => (
                       <option
@@ -73,6 +219,9 @@ const Calculator = () => {
                 </label>
                 <input
                   type="text"
+                  value={noOfPages}
+                  name="noOfPages"
+                  onChange={handleOnChange}
                   placeholder="Enter Total Pages"
                   className="w-[245px] border border-gray-300 h-9 rounded-[7px] p-2 mt-1 text-xs text-gray-500"
                 />
@@ -85,8 +234,18 @@ const Calculator = () => {
                   <option className="text-xs">Paperback</option>
                 </select>
               </div>
-              <div className="m-auto w-[141px] pt-9">
+              <div className="error m-0 p-0">
+                {error.card1Error ? (
+                  <p className="text-rose-500 text-sm text-center m-0 p-0">
+                    {error.card1Error}
+                  </p>
+                ) : (
+                  <p className="invisible">error</p>
+                )}
+              </div>
+              <div className="m-auto w-[141px] ">
                 <button
+                  onClick={calculateProductionCost}
                   type="button"
                   className="w-full bg-[#F8303D] text-white font-semibold py-2 rounded-lg hover:bg-[#d52932] transition"
                 >
@@ -95,9 +254,11 @@ const Calculator = () => {
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100  shadow-inner">
-              <p className="text-gray-700 text-sm">Production Cost:</p>
+              <p className="text-gray-700 text-sm">
+                Production Cost: {card1.pc}
+              </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Minimum Selling Price (MSP):
+                Minimum Selling Price (MSP): {card1.msp}
               </p>
             </div>
           </div>
@@ -122,6 +283,9 @@ const Calculator = () => {
                   <span className="text-gray-500 text-xs">₹</span>
                   <input
                     type="text"
+                    value={mrp}
+                    name="mrp"
+                    onChange={handleOnChange}
                     placeholder="Set Selling Price"
                     className="w-full text-xs text-gray-500 border-none focus:outline-none"
                   />
@@ -134,9 +298,19 @@ const Calculator = () => {
                 for colour printing or size variants.
               </p>
 
-              <div className="m-auto w-[141px] pt-9">
+              <div className="error m-0 pt-2">
+                {error.card2Error ? (
+                  <p className="text-rose-500 text-sm text-center m-0 p-0">
+                    {error.card2Error}
+                  </p>
+                ) : (
+                  <p className="invisible">error</p>
+                )}
+              </div>
+              <div className="m-auto w-[141px]">
                 <button
                   type="button"
+                  onClick={calculatePaperBackEarning}
                   className="w-full bg-[#F8303D] text-white font-semibold py-2 rounded-lg hover:bg-[#d52932] transition"
                 >
                   Calculate
@@ -145,9 +319,11 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Other Distribution Channels:
+                Other Distribution Channels: {card2.odc}
               </p>
-              <p className="text-gray-700 mt-5 text-sm">OrangeBooks Store:</p>
+              <p className="text-gray-700 mt-5 text-sm">
+                OrangeBooks Store: {card2.vbdStore}
+              </p>
             </div>
           </div>
         </div>
@@ -169,8 +345,24 @@ const Calculator = () => {
                 <label className="text-[#555] w-[200px] text-sm font-medium">
                   Book Size:
                 </label>
-                <select className="w-[245px] border border-gray-300 p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500">
-                  <option className="text-xs">Select Book Size</option>
+                <select
+                  value={selectedBookType2}
+                  onChange={(e) => setSelectedBookType2(e.target.value)}
+                  className="w-[245px] border border-gray-300 p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500"
+                >
+                  <option value="Select Book Size" className="text-xs">
+                    Select Book Size
+                  </option>
+                  {booksData &&
+                    booksData.map((item) => (
+                      <option
+                        key={item._id}
+                        value={item.bookType}
+                        className="text-xs"
+                      >
+                        {item.bookType}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="flex items-center">
@@ -179,12 +371,25 @@ const Calculator = () => {
                 </label>
                 <input
                   type="text"
+                  value={noOfPages2}
+                  name="noOfPages2"
+                  onChange={handleOnChange}
                   placeholder="Enter Total Pages"
                   className="w-[245px] border border-gray-300 h-9 rounded-[7px] p-2 mt-1 text-xs text-gray-500"
                 />
               </div>
-              <div className="m-auto w-[141px] pt-6">
+              <div className="error m-0 p-0">
+                {error.card3Error ? (
+                  <p className="text-rose-500 text-sm text-center m-0 p-0">
+                    {error.card3Error}
+                  </p>
+                ) : (
+                  <p className="invisible">error</p>
+                )}
+              </div>
+              <div className="m-auto w-[141px]">
                 <button
+                  onClick={calcuateSuggestedPrice}
                   type="button"
                   className="w-full bg-[#F8303D] text-white font-semibold py-2 rounded-lg hover:bg-[#d52932] transition"
                 >
@@ -193,8 +398,12 @@ const Calculator = () => {
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
-              <p className="text-gray-700 text-sm">Minimum Paperback MRP:</p>
-              <p className="text-gray-700 mt-5 text-sm">Suggested Ebook MRP:</p>
+              <p className="text-gray-700 text-sm">
+                Minimum Paperback MRP: {card3.paperbackMrp}
+              </p>
+              <p className="text-gray-700 mt-5 text-sm">
+                Suggested Ebook MRP: {card3.suggestedMrp}
+              </p>
             </div>
             <p className="text-gray-600 text-center text-xs px-4 pt-4">
               Suggested Price is exclusive of taxes and handling charges. It is
@@ -221,6 +430,9 @@ const Calculator = () => {
                   <span className="text-gray-500 text-xs">₹</span>
                   <input
                     type="text"
+                    value={mrp2}
+                    name="mrp2"
+                    onChange={handleOnChange}
                     placeholder="Set Ebook Selling Price"
                     className="w-full text-xs text-gray-500 border-none focus:outline-none"
                   />
@@ -231,18 +443,32 @@ const Calculator = () => {
                 be less than the price of paperback book. Ebook price cannot be
                 less than Rs.49.
               </p>
-              <div className="m-auto w-[141px] pt-6">
+              <div className="error m-0 p-0">
+                {error.card4Error ? (
+                  <p className="text-rose-500 text-sm text-center m-0 p-0">
+                    {error.card4Error}
+                  </p>
+                ) : (
+                  <p className="invisible">error</p>
+                )}
+              </div>
+              <div className=" flex justify-center">
                 <button
                   type="button"
-                  className="w-full bg-[#F8303D] text-white font-semibold py-2 rounded-lg hover:bg-[#d52932] transition"
+                  onClick={calculateEbookEarning}
+                  className=" w-[141px] bg-[#F8303D] text-white font-semibold py-2 rounded-lg hover:bg-[#d52932] transition"
                 >
                   Calculate
                 </button>
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
-              <p className="text-gray-700 text-sm">Amazon Kindle:</p>
-              <p className="text-gray-700 mt-5 text-sm">Google Playstore:</p>
+              <p className="text-gray-700 text-sm">
+                Amazon Kindle: {card4.kindle}
+              </p>
+              <p className="text-gray-700 mt-5 text-sm">
+                Google Playstore:{card4.gPlaystore}
+              </p>
             </div>
             <p className="text-gray-600 text-center text-xs px-4 pt-4">
               Author Earnings shown above are exclusive of taxes. It is subject
