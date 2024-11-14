@@ -1,13 +1,20 @@
 "use client";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import BookPriceItem from "./PriceBookItem";
 import AddNewBookPrice from "./AddNewBookPrice";
 
 const AdminScreen = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+
+ useLayoutEffect(()=>{
+  if (!token) {
+    router.push("/");
+  }
+ },[])
 
   const [bookPrice, setBookPrice] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
