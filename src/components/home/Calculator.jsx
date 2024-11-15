@@ -1,6 +1,8 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const Calculator = () => {
   // input states
@@ -156,6 +158,21 @@ const Calculator = () => {
   return (
     <div className=" bg-gray-50 ">
       <div className="flex flex-col items-center justify-center bg-gray-50 p-6">
+        <div className="mb-4">
+          <Link
+            href="https://www.vbdpublications.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/logo.jpg"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="md:w-full md:h-full"
+            />
+          </Link>
+        </div>
         <button className="border border-gray-300 rounded py-1 px-4 text-gray-600 text-sm mb-4">
           Custom Royalty Calculator
         </button>
@@ -178,8 +195,8 @@ const Calculator = () => {
       <div className="container m-auto  bg-gray-50 pb-8 ">
         <div className="flex flex-col md:flex-row justify-center items-start gap-12 ">
           {/* Calculator 1 */}
-          <div className="bg-white shadow-lg rounded-xl w-[460px]">
-            <div className="bg-[#FDEFE0] p-4">
+          <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
+            <div className="bg-[#FDEFE0] p-4 py-5">
               <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
                 1. Production Cost
               </h2>
@@ -264,8 +281,8 @@ const Calculator = () => {
           </div>
 
           {/* Calculator 2 */}
-          <div className="bg-white shadow-lg rounded-xl w-[460px]">
-            <div className="bg-[#FDEFE0] p-4">
+          <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
+            <div className="bg-[#FDEFE0] p-4 py-5">
               <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
                 2. Paperback Earnings
               </h2>
@@ -330,8 +347,8 @@ const Calculator = () => {
 
         <div className="flex flex-col md:flex-row justify-center items-start gap-12 mt-12 ">
           {/* Suggested Price Card */}
-          <div className="bg-white shadow-lg rounded-xl w-[460px]">
-            <div className="bg-[#FDEFE0] p-4">
+          <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
+            <div className="bg-[#FDEFE0] p-4 py-5">
               <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
                 3. Suggested Price
               </h2>
@@ -405,15 +422,11 @@ const Calculator = () => {
                 Suggested Ebook MRP: {card3.suggestedMrp}
               </p>
             </div>
-            <p className="text-gray-600 text-center text-xs px-4 pt-4">
-              Suggested Price is exclusive of taxes and handling charges. It is
-              subject to change as per the current market conditions.
-            </p>
           </div>
 
           {/* Ebook Earnings Card */}
-          <div className="bg-white shadow-lg rounded-xl w-[460px]">
-            <div className="bg-[#FDEFE0] p-4">
+          <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
+            <div className="bg-[#FDEFE0] p-4 py-5">
               <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
                 4. Ebook Earnings
               </h2>
@@ -470,10 +483,6 @@ const Calculator = () => {
                 Google Playstore:{card4.gPlaystore}
               </p>
             </div>
-            <p className="text-gray-600 text-center text-xs px-4 pt-4">
-              Author Earnings shown above are exclusive of taxes. It is subject
-              to change as per the respective marketplace.
-            </p>
           </div>
         </div>
       </div>
