@@ -86,7 +86,7 @@ const BookPriceItem = ({ book, setBookPrice, bookPrice, token }) => {
             </button>
           </div>
         ) : (
-          <div className="">
+          <div className="flex flex-col gap-y-3">
             <button
               onClick={(e) => setIsDissabled(true)}
               className="bg-gray-200 hover:bg-gray-300 mx-1 px-8 py-2 rounded-md"

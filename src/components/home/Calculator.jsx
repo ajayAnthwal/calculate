@@ -89,7 +89,7 @@ const Calculator = () => {
       });
       return;
     }
-    const x = parseInt(card1.msp) * 0.4;
+    const x = parseInt(card1.msp) * 0.6;
     const otherDistChannel = x - card1.pc;
     const vbdStore = parseInt(card1.msp) - parseInt(card1.pc);
     setCard2({ odc: otherDistChannel, vbdStore });
@@ -196,11 +196,11 @@ const Calculator = () => {
         <div className="flex flex-col md:flex-row justify-center items-start gap-12 ">
           {/* Calculator 1 */}
           <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
-            <div className="bg-[#FDEFE0] p-4 py-5">
-              <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
+            <div className="bg-[#F8303D] p-4 py-5">
+              <h2 className="text-[1.5rem] font-semibold text-[#fff] mb-2 text-center leading-[1.5]">
                 1. Production Cost
               </h2>
-              <p className="text-gray-600 text-center text-xs">
+              <p className="text-white text-center text-xs">
                 Use the tool below to estimate the production cost of your book
                 with a Black & White interior.
               </p>
@@ -282,11 +282,11 @@ const Calculator = () => {
 
           {/* Calculator 2 */}
           <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
-            <div className="bg-[#FDEFE0] p-4 py-5">
-              <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
+            <div className="bg-[#F8303D] p-4 py-5">
+              <h2 className="text-[1.5rem] font-semibold text-[#fff] mb-2 text-center leading-[1.5]">
                 2. Paperback Earnings
               </h2>
-              <p className="text-gray-600 text-center text-xs">
+              <p className="text-white text-center text-xs">
                 Use the tool below to estimate the paperback royalty of your
                 book with a Black & White interior.
               </p>
@@ -339,7 +339,7 @@ const Calculator = () => {
                 Other Distribution Channels: {card2.odc}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                OrangeBooks Store: {card2.vbdStore}
+                VBD Store: {card2.vbdStore}
               </p>
             </div>
           </div>
@@ -348,13 +348,13 @@ const Calculator = () => {
         <div className="flex flex-col md:flex-row justify-center items-start gap-12 mt-12 ">
           {/* Suggested Price Card */}
           <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
-            <div className="bg-[#FDEFE0] p-4 py-5">
-              <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
+            <div className="bg-[#F8303D] p-4 py-5">
+              <h2 className="text-[1.5rem] font-semibold text-[#fff] mb-2 text-center leading-[1.5]">
                 3. Suggested Price
               </h2>
-              <p className="text-gray-600 text-center text-xs">
+              <p className="text-white text-center text-xs">
                 Use the tool below to get the most suitable price by
-                orangebooks.
+                VBD.
               </p>
             </div>
             <form className="space-y-4 p-4">
@@ -426,11 +426,11 @@ const Calculator = () => {
 
           {/* Ebook Earnings Card */}
           <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
-            <div className="bg-[#FDEFE0] p-4 py-5">
-              <h2 className="text-[1.5rem] font-semibold text-[#ED6926] mb-2 text-center leading-[1.5]">
+            <div className="bg-[#F8303D] p-4 py-5">
+              <h2 className="text-[1.5rem] font-semibold text-[#fff] mb-2 text-center leading-[1.5]">
                 4. Ebook Earnings
               </h2>
-              <p className="text-gray-600 text-center text-xs">
+              <p className="text-white text-center text-xs">
                 Use the tool below to estimate the ebook royalty of your book.
               </p>
             </div>

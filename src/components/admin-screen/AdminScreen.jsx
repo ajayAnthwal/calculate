@@ -10,11 +10,11 @@ const AdminScreen = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
- useLayoutEffect(()=>{
-  if (!token) {
-    router.push("/");
-  }
- },[])
+  useLayoutEffect(() => {
+    if (!token) {
+      router.push("/");
+    }
+  }, []);
 
   const [bookPrice, setBookPrice] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
