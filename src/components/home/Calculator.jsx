@@ -118,7 +118,7 @@ const Calculator = () => {
     if (!selectedItem) {
       return;
     }
-    const minimumPaperbackMrp = parseInt(noOfPages2) * 1.55;
+    const minimumPaperbackMrp = parseInt(noOfPages2) * selectedItem?.msp;
     const suggestedEbookMrp = Math.round(minimumPaperbackMrp / 2);
 
     setCard3({
