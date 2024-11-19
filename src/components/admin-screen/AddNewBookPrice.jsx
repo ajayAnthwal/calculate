@@ -5,19 +5,21 @@ import React, { useState } from "react";
 const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [msp, setMsp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const addNewBookService = async () => {
-    if (!name || !price) return;
+    if (!name || !price || !msp) return;
     const isValidPrice = /^\d+(\.\d{1,2})?$/.test(price);
-    if (!isValidPrice) {
+    const isValidMsp = /^\d+(\.\d{1,2})?$/.test(msp);
+    if (!isValidPrice || !isValidMsp) {
       alert("Please enter only numbers in price field!");
       return;
     }
 
     try {
       setIsLoading(true);
-      const payload = { bookPrice: [...bookPrice, { bookType: name, price }] };
+      const payload = { bookPrice: [...bookPrice, { bookType: name, price, msp }] };
       const res = await axios.post("/api/price/updatePrice", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,6 +28,7 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
       setIsLoading(false);
       setName("");
       setPrice("");
+      setMsp("");
       if (res.status == 200) {
         getBookPrice();
       }
@@ -49,7 +52,13 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
           className="p-3 border border-gray-300 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          placeholder="Enter price"
+          placeholder="Enter Production cost"
+        />
+        <input
+          className="p-3 border border-gray-300 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          value={msp}
+          onChange={(e) => setMsp(e.target.value)}
+          placeholder="Enter Minimum selling price"
         />
       </div>
       <div className="text-center">

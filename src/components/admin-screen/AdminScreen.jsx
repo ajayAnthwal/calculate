@@ -76,7 +76,7 @@ const AdminScreen = () => {
           <div className="bg-white shadow-2xl rounded-lg p-6 transition-shadow duration-300 hover:shadow-3xl">
             <h2 className="text-2xl font-semibold mb-4">Add New Book Price</h2>
             <AddNewBookPrice
-              bookPrice={bookPrice}
+              bookPrice={bookPrice || []}
               setBookPrice={setBookPrice}
               token={token}
               getBookPrice={getBookPrice}

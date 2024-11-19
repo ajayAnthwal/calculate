@@ -27,6 +27,7 @@ const Calculator = () => {
     card3Error: "",
     card4Error: "",
   });
+  const [loadingOptions, setLoadingOptions] = useState(true);
 
   const handleOnChange = (e) => {
     const inputValue = e.target.value;
@@ -73,7 +74,7 @@ const Calculator = () => {
     }
 
     const productionCost = parseInt(noOfPages) * selectedItem?.price;
-    const minimumSellingPrice = Number(parseInt(noOfPages) * 1.55);
+    const minimumSellingPrice = Number(parseInt(noOfPages) * selectedItem?.msp);
     setCard1({
       pc: Number(productionCost.toFixed(0)),
       msp: Number(minimumSellingPrice.toFixed(0)),
@@ -151,6 +152,9 @@ const Calculator = () => {
       if (res?.data[0]?.bookPrice) {
         const prices = res?.data[0]?.bookPrice;
         setBooksData(prices);
+        setLoadingOptions(false);
+      } else {
+        setLoadingOptions(false);
       }
     }
     getCall();
@@ -215,9 +219,15 @@ const Calculator = () => {
                   onChange={(e) => setSelectedBookType(e.target.value)}
                   className="w-[245px] border border-gray-300  p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500"
                 >
-                  <option value="Select Book Size" className="text-xs">
-                    Select Book Size
-                  </option>
+                  {loadingOptions ? (
+                    <option value="Select Book Size" className="text-xs">
+                      Loading...
+                    </option>
+                  ) : (
+                    <option value="Select Book Size" className="text-xs">
+                      Select Book Size
+                    </option>
+                  )}
                   {booksData &&
                     booksData.map((item) => (
                       <option
@@ -353,8 +363,7 @@ const Calculator = () => {
                 3. Suggested Price
               </h2>
               <p className="text-white text-center text-xs">
-                Use the tool below to get the most suitable price by
-                VBD.
+                Use the tool below to get the most suitable price by VBD.
               </p>
             </div>
             <form className="space-y-4 p-4">
@@ -367,9 +376,15 @@ const Calculator = () => {
                   onChange={(e) => setSelectedBookType2(e.target.value)}
                   className="w-[245px] border border-gray-300 p-2 mt-1 h-9 rounded-[7px] text-xs text-gray-500"
                 >
-                  <option value="Select Book Size" className="text-xs">
-                    Select Book Size
-                  </option>
+                  {loadingOptions ? (
+                    <option value="Select Book Size" className="text-xs">
+                      Loading...
+                    </option>
+                  ) : (
+                    <option value="Select Book Size" className="text-xs">
+                      Select Book Size
+                    </option>
+                  )}
                   {booksData &&
                     booksData.map((item) => (
                       <option

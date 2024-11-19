@@ -12,6 +12,10 @@ const BookPriceSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        msp: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     createdAt: {
