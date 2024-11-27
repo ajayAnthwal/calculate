@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { numberThousandSaperator } from "@/utils/numberThousandSaperator";
 
 const Calculator = () => {
   // input states
@@ -119,7 +120,18 @@ const Calculator = () => {
       return;
     }
     const minimumPaperbackMrp = parseInt(noOfPages2) * selectedItem?.msp;
-    const suggestedEbookMrp = Math.round(minimumPaperbackMrp / 2);
+    const suggestedEbookMrp = Math.round(
+      noOfPages2 * selectedItem?.suggestedFactorValue
+    );
+
+    // If entered pages less than equal to 150 set to 9990
+    if (noOfPages2 <= 150) {
+      setCard3({
+        paperbackMrp: Number(minimumPaperbackMrp).toFixed(0),
+        suggestedMrp: 9990,
+      });
+      return;
+    }
 
     setCard3({
       paperbackMrp: Number(minimumPaperbackMrp).toFixed(0),
@@ -282,10 +294,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100  shadow-inner">
               <p className="text-gray-700 text-sm">
-                Production Cost: {card1.pc}
+                Production Cost: {numberThousandSaperator(card1.pc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Minimum Selling Price (MSP): {card1.msp}
+                Minimum Selling Price (MSP): {numberThousandSaperator(card1.msp)}
               </p>
             </div>
           </div>
@@ -346,10 +358,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Other Distribution Channels: {card2.odc}
+                Other Distribution Channels: {numberThousandSaperator(card2.odc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                VBD Store: {card2.vbdStore}
+                VBD Store: {numberThousandSaperator(card2.vbdStore)}
               </p>
             </div>
           </div>
@@ -431,10 +443,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Minimum Paperback MRP: {card3.paperbackMrp}
+                Minimum Paperback MRP: {numberThousandSaperator(card3.paperbackMrp)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Suggested Ebook MRP: {card3.suggestedMrp}
+                Suggested Package: {numberThousandSaperator(card3.suggestedMrp)}
               </p>
             </div>
           </div>
@@ -492,10 +504,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Amazon Kindle: {card4.kindle}
+                Amazon Kindle: {numberThousandSaperator(card4.kindle)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Google Playstore:{card4.gPlaystore}
+                Google Playstore:{numberThousandSaperator(card4.gPlaystore)}
               </p>
             </div>
           </div>

@@ -6,20 +6,30 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [msp, setMsp] = useState("");
+  const [suggestedValue, setSuggestedValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const addNewBookService = async () => {
-    if (!name || !price || !msp) return;
+    if (!name || !price || !msp) {
+      alert("Please enter all the required fields");
+      return;
+    }
     const isValidPrice = /^\d+(\.\d{1,2})?$/.test(price);
     const isValidMsp = /^\d+(\.\d{1,2})?$/.test(msp);
-    if (!isValidPrice || !isValidMsp) {
+    const isSuggestedValue = /^\d+(\.\d{1,2})?$/.test(suggestedValue);
+    if (!isValidPrice || !isValidMsp || !isSuggestedValue) {
       alert("Please enter only numbers in price field!");
       return;
     }
 
     try {
       setIsLoading(true);
-      const payload = { bookPrice: [...bookPrice, { bookType: name, price, msp }] };
+      const payload = {
+        bookPrice: [
+          ...bookPrice,
+          { bookType: name, price, msp, suggestedFactorValue: suggestedValue },
+        ],
+      };
       const res = await axios.post("/api/price/updatePrice", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,6 +39,7 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
       setName("");
       setPrice("");
       setMsp("");
+      setSuggestedValue("");
       if (res.status == 200) {
         getBookPrice();
       }
@@ -36,6 +47,7 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
       setIsLoading(false);
       setName("");
       setPrice("");
+      setSuggestedValue("");
     }
   };
 
@@ -59,6 +71,12 @@ const AddNewBookPrice = ({ bookPrice, token, getBookPrice }) => {
           value={msp}
           onChange={(e) => setMsp(e.target.value)}
           placeholder="Enter Minimum selling price"
+        />
+        <input
+          className="p-3 border border-gray-300 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          value={suggestedValue}
+          onChange={(e) => setSuggestedValue(e.target.value)}
+          placeholder="Enter Suggested package factor value"
         />
       </div>
       <div className="text-center">

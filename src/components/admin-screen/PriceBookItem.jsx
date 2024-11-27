@@ -1,26 +1,39 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Pencil, Trash } from "../icons/Icons";
 
 const BookPriceItem = ({ book, setBookPrice, bookPrice, token }) => {
-  const [name, setName] = useState(book.bookType);
-  const [price, setPrice] = useState(book.price);
-  const [msp, setMsp] = useState(book.msp);
+  const inputRef = useRef(null);
+  const [name, setName] = useState(book?.bookType);
+  const [price, setPrice] = useState(book?.price);
+  const [msp, setMsp] = useState(book?.msp);
+  const [suggestedFactorValue, setsuggestedFactorValue] = useState(
+    book?.suggestedFactorValue
+  );
   const [isDissabled, setIsDissabled] = useState(true);
 
   const saveData = () => {
-    if (!name || !price || !msp) return;
+    if (!name || !price || !msp || !suggestedFactorValue) return;
     const isValidPrice = /^\d+(\.\d{1,2})?$/.test(price);
     const isValidMsp = /^\d+(\.\d{1,2})?$/.test(msp);
-    if (!isValidPrice || !isValidMsp) {
+    const isValidSuggestedFactorValue = /^\d+(\.\d{1,2})?$/.test(
+      suggestedFactorValue
+    );
+    if (!isValidPrice || !isValidMsp || !isValidSuggestedFactorValue) {
       alert("Please enter only numbers in price field!");
       return;
     }
 
     let newBookPriceData = bookPrice.map((item) => {
       if (item._id == book._id) {
-        let newItem = { _id: item._id, bookType: name, price: price, msp };
+        let newItem = {
+          _id: item._id,
+          bookType: name,
+          price: price,
+          msp,
+          suggestedFactorValue,
+        };
         return newItem;
       } else {
         return item;
@@ -60,30 +73,43 @@ const BookPriceItem = ({ book, setBookPrice, bookPrice, token }) => {
     <div>
       <div className="flex">
         <input
+          ref={inputRef}
           disabled={isDissabled}
-          className={`p-4 border w-[155px]`}
+          className={`p-4 border w-[120px]`}
           placeholder={name}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           disabled={isDissabled}
-          className="p-2 border w-[75px]"
+          className="p-2 border w-[60px]"
           placeholder={price}
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
         <input
           disabled={isDissabled}
-          className="p-2 border w-[75px]"
+          className="p-2 border w-[60px]"
           placeholder={msp}
           value={msp}
           onChange={(e) => setMsp(e.target.value)}
         />
+        <input
+          disabled={isDissabled}
+          className="p-2 border w-[60px]"
+          placeholder={suggestedFactorValue}
+          value={suggestedFactorValue}
+          onChange={(e) => setsuggestedFactorValue(e.target.value)}
+        />
         {isDissabled && (
           <div className="">
             <button
-              onClick={(e) => setIsDissabled(false)}
+              onClick={(e) => {
+                setIsDissabled(false);
+                setTimeout(() => {
+                  inputRef.current.focus();
+                }, 10);
+              }}
               className="p-3  hover:text-yellow-500"
             >
               <Pencil />

@@ -16,6 +16,10 @@ const BookPriceSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        suggestedFactorValue: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     createdAt: {
