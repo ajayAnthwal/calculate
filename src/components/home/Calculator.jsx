@@ -297,7 +297,8 @@ const Calculator = () => {
                 Production Cost: {numberThousandSaperator(card1.pc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Minimum Selling Price (MSP): {numberThousandSaperator(card1.msp)}
+                Minimum Selling Price (MSP):{" "}
+                {numberThousandSaperator(card1.msp)}
               </p>
             </div>
           </div>
@@ -331,10 +332,8 @@ const Calculator = () => {
                 </div>
               </div>
               <p className="text-justify text-gray-600 text-xs p-3">
-                Note: Cost is calcuated for black and white book on white pages.
-                Price may increase for cream pages. Standard 5×8in size books
-                are best suited for non-academic and fiction genre. Contact us
-                for colour printing or size variants.
+                Cost is calculated for black and white print on white pages.
+                Cover is of multicolor.
               </p>
 
               <div className="error m-0 pt-2">
@@ -358,10 +357,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Other Distribution Channels: {numberThousandSaperator(card2.odc)}
+                Author's Earning: {numberThousandSaperator(card2.odc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                VBD Store: {numberThousandSaperator(card2.vbdStore)}
+                For Sale of Each Book: {numberThousandSaperator(card2.vbdStore)}
               </p>
             </div>
           </div>
@@ -375,7 +374,7 @@ const Calculator = () => {
                 3. Suggested Price
               </h2>
               <p className="text-white text-center text-xs">
-                Use the tool below to get the most suitable price by VBD.
+              Use the tool below to get the most suitable Package (except figure charges).
               </p>
             </div>
             <form className="space-y-4 p-4">
@@ -443,7 +442,8 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Minimum Paperback MRP: {numberThousandSaperator(card3.paperbackMrp)}
+                Minimum Paperback MRP:{" "}
+                {numberThousandSaperator(card3.paperbackMrp)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
                 Suggested Package: {numberThousandSaperator(card3.suggestedMrp)}
@@ -504,10 +504,10 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Amazon Kindle: {numberThousandSaperator(card4.kindle)}
+              Author's Earning:: {numberThousandSaperator(card4.kindle)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                Google Playstore:{numberThousandSaperator(card4.gPlaystore)}
+              For Sale of Each Book:{numberThousandSaperator(card4.gPlaystore)}
               </p>
             </div>
           </div>
