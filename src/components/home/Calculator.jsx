@@ -357,7 +357,7 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-                Author's Earning: {numberThousandSaperator(card2.odc)}
+              Author&#39;s Earning: {numberThousandSaperator(card2.odc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
                 For Sale of Each Book: {numberThousandSaperator(card2.vbdStore)}
@@ -374,7 +374,8 @@ const Calculator = () => {
                 3. Suggested Price
               </h2>
               <p className="text-white text-center text-xs">
-              Use the tool below to get the most suitable Package (except figure charges).
+                Use the tool below to get the most suitable Package (except
+                figure charges).
               </p>
             </div>
             <form className="space-y-4 p-4">
@@ -504,10 +505,11 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-              Author's Earning:: {numberThousandSaperator(card4.kindle)}
+              Author&#39;s Earning: {numberThousandSaperator(card4.kindle)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-              For Sale of Each Book:{numberThousandSaperator(card4.gPlaystore)}
+                For Sale of Each Book:
+                {numberThousandSaperator(card4.gPlaystore)}
               </p>
             </div>
           </div>
