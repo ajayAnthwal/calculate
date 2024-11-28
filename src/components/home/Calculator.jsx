@@ -300,6 +300,12 @@ const Calculator = () => {
                 Minimum Selling Price (MSP):{" "}
                 {numberThousandSaperator(card1.msp)}
               </p>
+
+              <p className="text-gray-700 mt-5 text-sm">
+                Suggested E-books MRP: {numberThousandSaperator(card1.msp / 2)}
+                <br />
+                (50% Minimum selling price)
+              </p>
             </div>
           </div>
 
@@ -357,10 +363,15 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-              Author&#39;s Earning: {numberThousandSaperator(card2.odc)}
+                Author&#39;s earning for sale of each book:
+              </p>
+              <br />
+              <p className="text-gray-700 text-sm">
+                Other Distribution Channels:{" "}
+                {numberThousandSaperator(card2.odc)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                For Sale of Each Book: {numberThousandSaperator(card2.vbdStore)}
+                VBD Store : {numberThousandSaperator(card2.vbdStore)}
               </p>
             </div>
           </div>
@@ -371,7 +382,7 @@ const Calculator = () => {
           <div className="bg-white shadow-lg rounded-xl w-[370px] md:w-[460px] mx-auto md:mx-0">
             <div className="bg-[#F8303D] p-4 py-5">
               <h2 className="text-[1.5rem] font-semibold text-[#fff] mb-2 text-center leading-[1.5]">
-                3. Suggested Price
+                3. Suggested Package
               </h2>
               <p className="text-white text-center text-xs">
                 Use the tool below to get the most suitable Package (except
@@ -505,10 +516,14 @@ const Calculator = () => {
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
               <p className="text-gray-700 text-sm">
-              Author&#39;s Earning: {numberThousandSaperator(card4.kindle)}
+                Author&#39;s earning for sale of each e-book:
+              </p>
+              <br />
+              <p className="text-gray-700 text-sm">
+                Amazon Kindle: {numberThousandSaperator(card4.kindle)}
               </p>
               <p className="text-gray-700 mt-5 text-sm">
-                For Sale of Each Book:
+                Google Playstore:
                 {numberThousandSaperator(card4.gPlaystore)}
               </p>
             </div>
