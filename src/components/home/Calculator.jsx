@@ -453,10 +453,10 @@ const Calculator = () => {
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
-              <p className="text-gray-700 text-sm">
+              {/* <p className="text-gray-700 text-sm">
                 Minimum Paperback MRP:{" "}
                 {numberThousandSaperator(card3.paperbackMrp)}
-              </p>
+              </p> */}
               <p className="text-gray-700 mt-5 text-sm">
                 Suggested Package: {numberThousandSaperator(card3.suggestedMrp)}
               </p>
