@@ -303,8 +303,6 @@ const Calculator = () => {
 
               <p className="text-gray-700 mt-5 text-sm">
                 Suggested E-books MRP: {numberThousandSaperator(card1.msp / 2)}
-                <br />
-                (50% Minimum selling price)
               </p>
             </div>
           </div>
@@ -362,9 +360,10 @@ const Calculator = () => {
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
-              <p className="text-gray-700 text-sm">
+              <b><p className="text-gray-700 text-sm">
                 Author&#39;s earning for sale of each book:
               </p>
+              </b>
               <br />
               <p className="text-gray-700 text-sm">
                 Other Distribution Channels:{" "}
@@ -515,9 +514,10 @@ const Calculator = () => {
               </div>
             </form>
             <div className="mt-6 p-4 bg-gray-100 shadow-inner">
-              <p className="text-gray-700 text-sm">
+              <b><p className="text-gray-700 text-sm">
                 Author&#39;s earning for sale of each e-book:
               </p>
+              </b>
               <br />
               <p className="text-gray-700 text-sm">
                 Amazon Kindle: {numberThousandSaperator(card4.kindle)}
